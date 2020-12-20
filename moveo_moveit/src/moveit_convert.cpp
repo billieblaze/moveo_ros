@@ -5,13 +5,13 @@
 
 moveo_moveit::ArmJointState arm_steps;
 moveo_moveit::ArmJointState total;
-int stepsPerRevolution[6] = {32800,18000,72000,3280,14400,0};  // microsteps/revolution (using 16ths) from observation, for each motor
+int stepsPerRevolution[7] = {16400,9000,36000,1640,7200,7200,0};  // microsteps/revolution (using 8ths) from observation, for each motor
 int joint_status = 0;
-double cur_angle[6];
-int joint_step[6];
-double prev_angle[6] = {0,0,0,0,0,0}; 
-double init_angle[6] = {0,0,0,0,0,0};
-double total_steps[6] = {0,0,0,0,0,0};
+double cur_angle[7];
+int joint_step[7];
+double prev_angle[7] = {0,0,0,0,0,0,0};
+double init_angle[7] = {0,0,0,0,0,0,0};
+double total_steps[7] = {0,0,0,0,0,0,0};
 int count = 0;
 
 
@@ -24,7 +24,7 @@ int count = 0;
 //   return steps;
 // }
 
-//command callback (for position) function 
+//command callback (for position) function
 void cmd_cb(const sensor_msgs::JointState& cmd_arm)
 {
   if (count==0){
@@ -34,6 +34,7 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
     prev_angle[3] = cmd_arm.position[3];
     prev_angle[4] = cmd_arm.position[4];
     prev_angle[5] = cmd_arm.position[5];
+    prev_angle[6] = cmd_arm.position[6];
 
     init_angle[0] = cmd_arm.position[0];
     init_angle[1] = cmd_arm.position[1];
@@ -41,13 +42,14 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
     init_angle[3] = cmd_arm.position[3];
     init_angle[4] = cmd_arm.position[4];
     init_angle[5] = cmd_arm.position[5];
+    init_angle[6] = cmd_arm.position[6];
   }
 
   // ros::NodeHandle nh;
   // ros::Subscriber sub = nh.subscribe("/move_group/fake_controller_joint_states",1000,cmd_cb);
   // ros::Publisher pub = nh.advertise<moveo_moveit::ArmJointState>("joint_steps",50);
   ROS_INFO_STREAM("Received /move_group/fake_controller_joint_states");
-    
+
   // arm_steps.position1 = (cmd_arm.position[0]*stepsPerRevolution[0]/M_PI+0.5)-prev_angle[0];
   // arm_steps.position2 = (cmd_arm.position[1]*stepsPerRevolution[1]/M_PI+0.5)-prev_angle[1];
   // arm_steps.position3 = (cmd_arm.position[2]*stepsPerRevolution[2]/M_PI+0.5)-prev_angle[2];
@@ -66,6 +68,7 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
   arm_steps.position4 = (int)((cmd_arm.position[3]-prev_angle[3])*stepsPerRevolution[3]/(2*M_PI));
   arm_steps.position5 = (int)((cmd_arm.position[4]-prev_angle[4])*stepsPerRevolution[4]/(2*M_PI));
   arm_steps.position6 = (int)((cmd_arm.position[5]-prev_angle[5])*stepsPerRevolution[5]/(2*M_PI));
+  arm_steps.position7 = (int)((cmd_arm.position[6]-prev_angle[6])*stepsPerRevolution[6]/(2*M_PI));
 
   ROS_INFO_NAMED("test", "arm_steps.position5 #2: %d", arm_steps.position5);
 
@@ -76,6 +79,7 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
     prev_angle[3] = cmd_arm.position[3];
     prev_angle[4] = cmd_arm.position[4];
     prev_angle[5] = cmd_arm.position[5];
+    prev_angle[6] = cmd_arm.position[6];
   }
 
   //total steps taken to get to goal
@@ -90,6 +94,8 @@ void cmd_cb(const sensor_msgs::JointState& cmd_arm)
   total.position3 += arm_steps.position3;
   total.position4 += arm_steps.position4;
   total.position5 += arm_steps.position5;
+  total.position6 += arm_steps.position6;
+  total.position7 += arm_steps.position7;
 
   ROS_INFO_NAMED("test", "total_steps[4]: %f, total: %d", total_steps[4], total.position5);
   ROS_INFO_NAMED("test", "arm_steps.position5 #3: %d", arm_steps.position5);
@@ -106,7 +112,7 @@ int main(int argc, char **argv)
   ROS_INFO_STREAM("In main function");
   ros::Subscriber sub = nh.subscribe("/move_group/fake_controller_joint_states",1000,cmd_cb);
   ros::Publisher pub = nh.advertise<moveo_moveit::ArmJointState>("joint_steps",50);
-  
+
   ros::Rate loop_rate(20);
 
   while (ros::ok())
@@ -119,7 +125,7 @@ int main(int argc, char **argv)
       ROS_INFO_STREAM("Published to /joint_steps");
     }
     ros::spinOnce();
-    loop_rate.sleep();  
+    loop_rate.sleep();
   }
 
   //ros::spin();

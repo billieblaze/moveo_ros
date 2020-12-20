@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(moveo_moveit)
 
 add_compile_options(-std=c++11)
@@ -76,5 +76,3 @@ target_link_libraries(moveit_convert
 target_link_libraries(move_group_1
   ${catkin_LIBRARIES}
 )
-
-

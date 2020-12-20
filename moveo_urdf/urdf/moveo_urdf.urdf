@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <robot
-  name="moveo_urdf">	
+  name="moveo_urdf">
 
   <link
     name="base_link">
@@ -354,6 +354,7 @@
       effort="5"
       velocity="1" />
   </joint>
+
   <link
     name="Gripper_Servo_Gear">
     <inertial>
@@ -469,7 +470,7 @@
       upper="1.3"
       effort="5"
       velocity="1" />
-    <mimic joint="Gripper_Servo_Gear_Joint" multiplier="1" offset="0"/> 
+    <mimic joint="Gripper_Servo_Gear_Joint" multiplier="1" offset="0"/>
   </joint>
   <link
     name="Gripper_Idol_Gear">
@@ -645,7 +646,7 @@
       upper="1.5707"
       effort="5"
       velocity="1" />
-    <mimic joint="Gripper_Servo_Gear_Joint" multiplier="1" offset="0"/> 
+    <mimic joint="Gripper_Servo_Gear_Joint" multiplier="1" offset="0"/>
   </joint>
   <link
     name="Pivot_Arm_Gripper_Idol">
@@ -704,7 +705,7 @@
       upper="1.5707"
       effort="5"
       velocity="1" />
-    <mimic joint="Gripper_Idol_Gear_Joint" multiplier="1" offset="0"/> 
+    <mimic joint="Gripper_Idol_Gear_Joint" multiplier="1" offset="0"/>
   </joint>
   <!--
   <gazebo>
@@ -735,7 +736,3 @@
   </gazebo>
   -->
 </robot>
-
-
-  
-

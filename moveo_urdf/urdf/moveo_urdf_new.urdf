@@ -330,6 +330,67 @@
       effort="5"
       velocity="1" />
   </joint>
+
+  <link
+    name="Link_6">
+    <inertial>
+      <origin
+        xyz="-0.011366 0.00012239 0.0078967"
+        rpy="0 0 0" />
+      <mass
+        value="0.19875" />
+      <inertia
+        ixx="6.2676E-05"
+        ixy="4.2551E-06"
+        ixz="4.0215E-05"
+        iyy="9.7792E-05"
+        iyz="8.5888E-07"
+        izz="9.5807E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://moveo_urdf_5/meshes/Link_6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://moveo_urdf_5/meshes/Link_6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_6"
+    type="revolute">
+    <origin
+      xyz="-0.0021346 0.053041 0.0016936"
+      rpy="-1.5639 -0.091135 -0.00062919" />
+    <parent
+      link="Link_5" />
+    <child
+      link="Link_6" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1"
+      upper="1"
+      effort="5"
+      velocity="1" />
+  </joint>
+
+
     <link
     name="Gripper_Servo_Gear">
     <inertial>
@@ -444,7 +505,7 @@
       lower="0"
       upper="1.3"
       effort="5"
-      velocity="1" /> 
+      velocity="1" />
   </joint>
   <link
     name="Gripper_Idol_Gear">
@@ -493,7 +554,7 @@
       xyz="0 0 0.088169"
       rpy="2.2206 -1.7526E-12 1.5708" />
     <parent
-      link="Link_5" />
+      link="Link_6" />
     <child
       link="Gripper_Idol_Gear" />
     <axis

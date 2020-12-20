@@ -6,6 +6,7 @@ controller_list:
       - Joint_3
       - Joint_4
       - Joint_5
+      - Joint_6
   - name: fake_gripper_controller
     joints:
       - Gripper_Idol_Gear_Joint
